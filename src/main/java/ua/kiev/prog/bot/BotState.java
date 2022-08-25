@@ -30,7 +30,7 @@ public enum BotState {
             Integer age = Integer.valueOf(context.getInput());
 
             if (Utils.isAdultUser(age)) {
-                context.getUser().setEmail(context.getInput());
+                context.getUser().setAge(age);
                 next = EnterPhone;
             } else {
                 sendMessage(context, "Service for adults only!");

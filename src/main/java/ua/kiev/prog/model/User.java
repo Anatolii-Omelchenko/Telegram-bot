@@ -73,6 +73,14 @@ public class User {
         this.email = email;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public Boolean getAdmin() {
         return admin;
     }
