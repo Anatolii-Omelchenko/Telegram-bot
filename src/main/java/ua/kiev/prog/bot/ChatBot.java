@@ -113,9 +113,9 @@ public class ChatBot extends TelegramLongPollingBot {
     }
 
     private void sendMessage(long chatId, String text) {
-        SendMessage message = new SendMessage()
-                .setChatId(chatId)
-                .setText(text);
+        SendMessage message = new SendMessage();
+        message.setChatId(Long.toString(chatId));
+        message.setText(text);
         try {
             execute(message);
         } catch (TelegramApiException e) {
@@ -127,9 +127,9 @@ public class ChatBot extends TelegramLongPollingBot {
         InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("test.png");
 
-        SendPhoto message = new SendPhoto()
-                .setChatId(chatId)
-                .setPhoto("test", is);
+        SendPhoto message = new SendPhoto();
+        //message.setChatId(chatId);
+        //message.setPhoto( "test", is);
         try {
             execute(message);
         } catch (TelegramApiException e) {

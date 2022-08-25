@@ -16,6 +16,7 @@ public class User {
     private String email;
     private Boolean admin;
     private Boolean notified = false;
+    private Integer age;
 
     public User() {
     }
@@ -25,10 +26,11 @@ public class User {
         this.stateId = state;
     }
 
-    public User(Long chatId, Integer stateId, Boolean admin) {
+    public User(Long chatId, Integer stateId, Boolean admin, Integer age) {
         this.chatId = chatId;
         this.stateId = stateId;
         this.admin = admin;
+        this.age = age;
     }
 
     public Long getId() {

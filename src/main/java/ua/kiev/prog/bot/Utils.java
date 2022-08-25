@@ -6,4 +6,8 @@ public class Utils {
     public static boolean isValidEmailAddress(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
+
+    public static boolean isAdultUser(Integer age) {
+        return age >= 18;
+    }
 }

@@ -13,7 +13,34 @@ public enum BotState {
 
         @Override
         public BotState nextState() {
-            return EnterPhone;
+            return EnterAge;
+        }
+    },
+
+    EnterAge {
+        private BotState next;
+
+        @Override
+        public void enter(BotContext context) {
+            sendMessage(context, "Enter your age please:");
+        }
+
+        @Override
+        public void handleInput(BotContext context) {
+            Integer age = Integer.valueOf(context.getInput());
+
+            if (Utils.isAdultUser(age)) {
+                context.getUser().setEmail(context.getInput());
+                next = EnterPhone;
+            } else {
+                sendMessage(context, "Service for adults only!");
+                next = Denied;
+            }
+        }
+
+        @Override
+        public BotState nextState() {
+            return next;
         }
     },
 
@@ -71,7 +98,20 @@ public enum BotState {
         public BotState nextState() {
             return Start;
         }
+    },
+    Denied(false) {
+        @Override
+        public void enter(BotContext context) {
+            sendMessage(context, "Good bye!");
+        }
+
+        @Override
+        public BotState nextState() {
+            return null;
+        }
     };
+
+    // --------------- //
 
     private static BotState[] states;
     private final boolean inputNeeded;
@@ -97,9 +137,9 @@ public enum BotState {
     }
 
     protected void sendMessage(BotContext context, String text) {
-        SendMessage message = new SendMessage()
-                .setChatId(context.getUser().getChatId())
-                .setText(text);
+        SendMessage message = new SendMessage();
+        message.setChatId(Long.toString(context.getUser().getChatId()));
+        message.setText(text);
         try {
             context.getBot().execute(message);
         } catch (TelegramApiException e) {
@@ -116,5 +156,6 @@ public enum BotState {
     }
 
     public abstract void enter(BotContext context);
+
     public abstract BotState nextState();
 }
